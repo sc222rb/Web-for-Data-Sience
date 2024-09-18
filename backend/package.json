@@ -1,0 +1,33 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "The backend for the Beehive Data Visualization project. This server is built with Node.js and Express, and it handles API requests, processes beehive data stored in MongoDB, and serves data to the frontend application.",
+  "type": "module",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon --inspect -r dotenv/config src/server.js",
+    "lint": "npx eslint ./src || exit 0",
+    "lint:fix": "npx eslint ./src --fix || exit 0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "csv-parse": "^5.5.6",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0",
+    "express-http-context": "^1.2.4",
+    "helmet": "^7.1.0",
+    "moment": "^2.30.1",
+    "mongoose": "^8.6.1",
+    "morgan": "^1.10.0",
+    "node-fetch": "^3.3.2",
+    "unzipper": "^0.12.3"
+  },
+  "devDependencies": {
+    "@lnu/eslint-config": "^1.1.10",
+    "nodemon": "^3.1.4"
+  }
+}
