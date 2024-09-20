@@ -9,6 +9,8 @@ import express from 'express'
 import { HiveController } from '../../../controllers/api/HiveController.js'
 import { router as flowRouter } from './flowRouter.js'
 import { router as humidityRouter } from './humidityRouter.js'
+import { router as temperatureRouter } from './temperatureRouter.js'
+import { router as weightRouter } from './weightRouter.js'
 
 export const router = express.Router()
 
@@ -31,3 +33,9 @@ router.use('/:id/flow', flowRouter)
 
 // Use the humidity router for /hives/:id/humidity routes
 router.use('/:id/humidity', humidityRouter)
+
+// Use the temperature router for /hives/:id/temperature routes
+router.use('/:id/temperature', temperatureRouter)
+
+// Use the weight router for /hives/:id/weight routes
+router.use('/:id/weight', weightRouter)
