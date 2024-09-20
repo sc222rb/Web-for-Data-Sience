@@ -7,6 +7,7 @@
 
 import express from 'express'
 import { HiveController } from '../../../controllers/api/HiveController.js'
+import { router as flowRouter } from './flowRouter.js'
 
 export const router = express.Router()
 
@@ -23,3 +24,6 @@ router.get('/',
 router.get('/:id',
   (req, res, next) => controller.find(req, res, next)
 )
+
+// Use the flow router for /hives/:id/flow routes
+router.use('/:id/flow', flowRouter)
