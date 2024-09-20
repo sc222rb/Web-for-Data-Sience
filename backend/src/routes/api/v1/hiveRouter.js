@@ -8,6 +8,7 @@
 import express from 'express'
 import { HiveController } from '../../../controllers/api/HiveController.js'
 import { router as flowRouter } from './flowRouter.js'
+import { router as humidityRouter } from './humidityRouter.js'
 
 export const router = express.Router()
 
@@ -27,3 +28,6 @@ router.get('/:id',
 
 // Use the flow router for /hives/:id/flow routes
 router.use('/:id/flow', flowRouter)
+
+// Use the humidity router for /hives/:id/humidity routes
+router.use('/:id/humidity', humidityRouter)
