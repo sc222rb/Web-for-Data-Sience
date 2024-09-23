@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import DateRangePicker from './components/DateRangePicker';
 import BeehiveEnvironmentalDashboard from './components/BeehiveEnvironmentalDashboard';
+import PlotFlow from './components/PlotFlow';
 import axios from 'axios';
 
 /**
@@ -43,6 +44,7 @@ const App = () => {
         <header className="bg-blue-500 text-white p-4 shadow-md w-full">
           <div id="visualizationLinks" className="flex justify-center space-x-4">
             <Link to="/" className="hover:bg-blue-600 transition duration-300 ease-in-out rounded py-2 px-4">Home</Link>
+            <Link to="/flow" className="hover:bg-blue-600 transition duration-300 ease-in-out rounded py-2 px-4">Flow</Link>
           </div>
         </header>
         <main className="flex-1 container mx-auto my-6 bg-white p-6 rounded-lg max-w-4xl">
@@ -56,6 +58,18 @@ const App = () => {
               path="/" 
               element={
                 <BeehiveEnvironmentalDashboard 
+                  hive1={hive1}
+                  hive2={hive2}
+                  fromDate={dateRange.fromDate} 
+                  toDate={dateRange.toDate} 
+                  searchTrigger={searchTrigger} 
+                />
+              } 
+            />
+            <Route 
+              path="/flow" 
+              element={
+                <PlotFlow 
                   hive1={hive1}
                   hive2={hive2}
                   fromDate={dateRange.fromDate} 
