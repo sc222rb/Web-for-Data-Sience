@@ -5,6 +5,7 @@ import BeehiveEnvironmentalDashboard from './components/BeehiveEnvironmentalDash
 import PlotFlow from './components/PlotFlow';
 import PlotHumidity from './components/PlotHumidity';
 import PlotTemperature from './components/PlotTemperature';
+import PlotWeight from './components/PlotWeight';
 import axios from 'axios';
 
 /**
@@ -48,6 +49,7 @@ const App = () => {
             <Link to="/" className="hover:bg-blue-600 transition duration-300 ease-in-out rounded py-2 px-4">Home</Link>
             <Link to="/temperature" className="hover:bg-blue-600 transition duration-300 ease-in-out rounded py-2 px-4">Temperature</Link>
             <Link to="/humidity" className="hover:bg-blue-600 transition duration-300 ease-in-out rounded py-2 px-4">Humidity</Link>
+            <Link to="/weight" className="hover:bg-blue-600 transition duration-300 ease-in-out rounded py-2 px-4">Weight</Link>
             <Link to="/flow" className="hover:bg-blue-600 transition duration-300 ease-in-out rounded py-2 px-4">Flow</Link>
           </div>
         </header>
@@ -93,6 +95,18 @@ const App = () => {
                   searchTrigger={searchTrigger} 
                 />
               } 
+            />
+            <Route 
+              path="/weight" 
+              element={
+                <PlotWeight 
+                  hive1={hive1} 
+                  hive2={hive2}
+                  fromDate={dateRange.fromDate} 
+                  toDate={dateRange.toDate} 
+                  searchTrigger={searchTrigger} 
+                />
+              }
             />
             <Route 
               path="/flow" 
