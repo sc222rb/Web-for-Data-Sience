@@ -3,8 +3,8 @@
 Beehive Environmental Monitoring Dashboard.
 
 ## 🎥 Demo
-Check out the live demo on YouTube:  
-[▶️ Watch Demo on YouTube](https://www.youtube.com/watch?v=zjLYnyyKxxI)
+[![▶️ Watch Demo on YouTube](https://img.youtube.com/vi/zjLYnyyKxxI/0.jpg)](https://www.youtube.com/watch?v=zjLYnyyKxxI)
+
 
 
 ## Project Description  
