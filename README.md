@@ -7,6 +7,10 @@ Beehive Environmental Monitoring Dashboard.
 This application provides an interactive visualization of beehive data from two locations, Würzburg and Schwartau, collected from Jan 2017 to May 2019. 
 The dataset was taken from Kaggle here: [Beehive metrics on Kaggle](https://www.kaggle.com/datasets/se18m502/bee-hive-metrics/data). The aim of this project is to give insights into the health and activity of the beehives by analyzing various parameters such as the number of bee arrivals and departures, temperature, humidity, and hive weight.
 
+MERNスタックを用いて、2拠点の養蜂場から収集された2017年から2019年までの約200万件の時系列データを統合管理・可視化するWebアプリケーションを開発しました。MongoDBのAggregation Pipelineを活用して1時間単位のデータ集約処理を実装し、APIのレスポンス時間を削減しました。また、hiveIdとtimestampの複合インデックスを用いることで検索性能を最適化し、RESTfulAPIをバージョニング対応で設計しました。さらに、KaggleAPIからのCSVデータを自動取得し、解析・バッチインサートする処理を構築するとともに、5か月間の欠損データに対しても適切に対応し、エラーが発生した場合のハンドリングも実装しました。
+ユーザーインターフェースでは、日付範囲フィルターで選択した期間の蜜蜂の出入りや温度、湿度、巣箱の重量をPlotly.jsを用いたインタラクティブなチャートで表示し、複数の巣箱データを同時に比較分析することができます。養蜂家が一目で巣箱の状態を把握できる仕組みです。
+
+
 The datasets used for this analysis are historical records and not real-time data. Four key parameters are tracked for each hive:
 1. **Flow Data**: This dataset records the number of bee arrivals and departures from each hive. Positive values indicate arrivals, while negative values represent departures.
 2. **Humidity Data**: This captures the humidity levels inside the hive over time, expressed as a percentage.
