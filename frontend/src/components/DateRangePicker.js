@@ -45,7 +45,7 @@ const DateRangePicker = ({ fromDate: initialFromDate, toDate: initialToDate, onS
         <h3 className="text-lg font-semibold">Select Date Range</h3>
       </div>
 
-      <div className="flex flex-wrap items-start gap-4">
+      <div className="flex flex-wrap items-end gap-4">
         {/* From Date */}
         <div className="flex-1 min-w-[200px]">
           <label htmlFor="fromDate" className="block text-sm font-medium text-gray-700 mb-2">
@@ -83,14 +83,14 @@ const DateRangePicker = ({ fromDate: initialFromDate, toDate: initialToDate, onS
         </div>
 
         {/* Search Button */}
-        <div className="flex items-end">
+        <div>
           <button 
             onClick={handleSearchClick}
             disabled={!!error}
             className={`
               px-8 py-3 rounded-lg font-medium text-white
               transition-all duration-300 transform hover:scale-105
-              flex items-center gap-2 shadow-lg
+              flex items-center gap-2 shadow-lg whitespace-nowrap
               ${error 
                 ? 'bg-gray-400 cursor-not-allowed' 
                 : 'bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700'

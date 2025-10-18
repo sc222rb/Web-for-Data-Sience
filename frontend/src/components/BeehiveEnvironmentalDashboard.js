@@ -12,6 +12,7 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
   const [data2, setData2] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [stats, setStats] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,6 +68,14 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
 
         setData1(dataForHive1);
 
+        // Calculate statistics for hive 1
+        const stats1 = {
+          avgTemp: (temperature1.data.reduce((sum, e) => sum + e.avgTemperature, 0) / temperature1.data.length).toFixed(1),
+          avgHumidity: (humidity1.data.reduce((sum, e) => sum + e.humidity, 0) / humidity1.data.length).toFixed(1),
+          avgWeight: (weight1.data.reduce((sum, e) => sum + e.avgWeight, 0) / weight1.data.length).toFixed(1),
+          avgFlow: (flow1.data.reduce((sum, e) => sum + Math.abs(e.avgNetFlow), 0) / flow1.data.length).toFixed(1),
+        };
+
         const [temperature2, humidity2, flow2, weight2] = await Promise.all([
           axios.get(`${process.env.REACT_APP_API_URL}/${hive2.id}/temperature`, { params }),
           axios.get(`${process.env.REACT_APP_API_URL}/${hive2.id}/humidity`, { params }),
@@ -114,6 +123,16 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
         ];
 
         setData2(dataForHive2);
+
+        // Calculate statistics for hive 2
+        const stats2 = {
+          avgTemp: (temperature2.data.reduce((sum, e) => sum + e.avgTemperature, 0) / temperature2.data.length).toFixed(1),
+          avgHumidity: (humidity2.data.reduce((sum, e) => sum + e.humidity, 0) / humidity2.data.length).toFixed(1),
+          avgWeight: (weight2.data.reduce((sum, e) => sum + e.avgWeight, 0) / weight2.data.length).toFixed(1),
+          avgFlow: (flow2.data.reduce((sum, e) => sum + Math.abs(e.avgNetFlow), 0) / flow2.data.length).toFixed(1),
+        };
+
+        setStats({ hive1: stats1, hive2: stats2 });
       } catch (error) {
         setError(error.message);
       } finally {
@@ -198,36 +217,85 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
       </div>
 
       {/* Info Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-        <DataCard 
-          icon="🌡️" 
-          title="Temperature" 
-          value="~35" 
-          unit="°C" 
-          color="red"
-        />
-        <DataCard 
-          icon="💧" 
-          title="Humidity" 
-          value="~60" 
-          unit="%" 
-          color="green"
-        />
-        <DataCard 
-          icon="⚖️" 
-          title="Weight" 
-          value="Variable" 
-          unit="kg" 
-          color="blue"
-        />
-        <DataCard 
-          icon="🐝" 
-          title="Bee Flow" 
-          value="Active" 
-          unit="" 
-          color="purple"
-        />
-      </div>
+      {stats && (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Hive 1 Cards */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-bold text-gray-700 flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+              {hive1.name}
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              <DataCard 
+                icon="🌡️" 
+                title="Temperature" 
+                value={stats.hive1.avgTemp} 
+                unit="°C" 
+                color="red"
+              />
+              <DataCard 
+                icon="💧" 
+                title="Humidity" 
+                value={stats.hive1.avgHumidity} 
+                unit="%" 
+                color="green"
+              />
+              <DataCard 
+                icon="⚖️" 
+                title="Weight" 
+                value={stats.hive1.avgWeight} 
+                unit="kg" 
+                color="blue"
+              />
+              <DataCard 
+                icon="🐝" 
+                title="Flow" 
+                value={stats.hive1.avgFlow} 
+                unit="avg" 
+                color="purple"
+              />
+            </div>
+          </div>
+
+          {/* Hive 2 Cards */}
+          <div className="space-y-4">
+            <h3 className="text-lg font-bold text-gray-700 flex items-center gap-2">
+              <div className="w-3 h-3 rounded-full bg-orange-500"></div>
+              {hive2.name}
+            </h3>
+            <div className="grid grid-cols-2 gap-4">
+              <DataCard 
+                icon="🌡️" 
+                title="Temperature" 
+                value={stats.hive2.avgTemp} 
+                unit="°C" 
+                color="red"
+              />
+              <DataCard 
+                icon="💧" 
+                title="Humidity" 
+                value={stats.hive2.avgHumidity} 
+                unit="%" 
+                color="green"
+              />
+              <DataCard 
+                icon="⚖️" 
+                title="Weight" 
+                value={stats.hive2.avgWeight} 
+                unit="kg" 
+                color="blue"
+              />
+              <DataCard 
+                icon="🐝" 
+                title="Flow" 
+                value={stats.hive2.avgFlow} 
+                unit="avg" 
+                color="purple"
+              />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Hive 1 Plot */}
       <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 animate-slideUp">
