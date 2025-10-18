@@ -2,19 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Plot from 'react-plotly.js';
 import axios from 'axios';
 import PropTypes from 'prop-types';
+import { LoadingSpinner, ErrorMessage, DataCard } from './CommonComponents';
 
 /**
  * BeehiveEnvironmentalDashboard Component
- * This component fetches and displays environmental data (temperature, humidity, flow, and weight)
- * for two beehives over a given date range. It renders two separate graphs, one for each hive,
- * showing the data trends over time.
- *
- * @param {Object} hive1 - The first hive object, containing hive information (id, name, etc.)
- * @param {Object} hive2 - The second hive object, containing hive information (id, name, etc.)
- * @param {string} fromDate - The starting date for data filtering (format: YYYY-MM-DD)
- * @param {string} toDate - The ending date for data filtering (format: YYYY-MM-DD)
- * @param {boolean} searchTrigger - A boolean trigger that refetches data when the search is initiated
- * @returns {JSX.Element} The rendered environmental dashboard component
  */
 const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchTrigger }) => {
   const [data1, setData1] = useState([]);
@@ -42,7 +33,8 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
             type: 'scatter',
             mode: 'lines',
             name: 'Temperature',
-            line: { color: 'red' }
+            line: { color: '#EF4444', width: 2 },
+            yaxis: 'y1'
           },
           {
             x: humidity1.data.map(entry => entry.timestamp),
@@ -50,7 +42,8 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
             type: 'scatter',
             mode: 'lines',
             name: 'Humidity',
-            line: { color: 'green' }
+            line: { color: '#10B981', width: 2 },
+            yaxis: 'y2'
           },
           {
             x: flow1.data.map(entry => entry.hour),
@@ -58,7 +51,8 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
             type: 'scatter',
             mode: 'lines',
             name: 'Net Flow',
-            line: { color: 'purple' }
+            line: { color: '#8B5CF6', width: 2 },
+            yaxis: 'y3'
           },
           {
             x: weight1.data.map(entry => entry.hour),
@@ -66,7 +60,8 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
             type: 'scatter',
             mode: 'lines',
             name: 'Weight',
-            line: { color: 'cyan' }
+            line: { color: '#06B6D4', width: 2 },
+            yaxis: 'y4'
           }
         ];
 
@@ -86,7 +81,8 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
             type: 'scatter',
             mode: 'lines',
             name: 'Temperature',
-            line: { color: 'blue' }
+            line: { color: '#F59E0B', width: 2 },
+            yaxis: 'y1'
           },
           {
             x: humidity2.data.map(entry => entry.timestamp),
@@ -94,7 +90,8 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
             type: 'scatter',
             mode: 'lines',
             name: 'Humidity',
-            line: { color: 'orange' }
+            line: { color: '#F97316', width: 2 },
+            yaxis: 'y2'
           },
           {
             x: flow2.data.map(entry => entry.hour),
@@ -102,7 +99,8 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
             type: 'scatter',
             mode: 'lines',
             name: 'Net Flow',
-            line: { color: 'brown' }
+            line: { color: '#EC4899', width: 2 },
+            yaxis: 'y3'
           },
           {
             x: weight2.data.map(entry => entry.hour),
@@ -110,13 +108,14 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
             type: 'scatter',
             mode: 'lines',
             name: 'Weight',
-            line: { color: 'magenta' }
+            line: { color: '#14B8A6', width: 2 },
+            yaxis: 'y4'
           }
         ];
 
         setData2(dataForHive2);
       } catch (error) {
-        setError(error);
+        setError(error.message);
       } finally {
         setLoading(false);
       }
@@ -125,39 +124,160 @@ const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchT
     fetchData();
   }, [hive1, hive2, fromDate, toDate, searchTrigger]);
 
-  if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
+  if (loading) return <LoadingSpinner message="Loading environmental data..." />;
+  if (error) return <ErrorMessage message={error} />;
+
+  const plotLayout = (title) => ({
+    title: {
+      text: title,
+      font: { size: 20, family: 'Inter, sans-serif', weight: 600 }
+    },
+    xaxis: { 
+      title: 'Time',
+      gridcolor: '#E5E7EB',
+      domain: [0, 1]
+    },
+    yaxis: {
+      title: 'Temperature (°C)',
+      titlefont: { color: '#EF4444' },
+      tickfont: { color: '#EF4444' },
+      position: 0,
+      anchor: 'free',
+    },
+    yaxis2: {
+      title: 'Humidity (%)',
+      titlefont: { color: '#10B981' },
+      tickfont: { color: '#10B981' },
+      overlaying: 'y',
+      side: 'right',
+      position: 1,
+    },
+    yaxis3: {
+      title: 'Flow',
+      titlefont: { color: '#8B5CF6' },
+      tickfont: { color: '#8B5CF6' },
+      overlaying: 'y',
+      side: 'left',
+      position: 0.05,
+      anchor: 'free',
+    },
+    yaxis4: {
+      title: 'Weight (kg)',
+      titlefont: { color: '#06B6D4' },
+      tickfont: { color: '#06B6D4' },
+      overlaying: 'y',
+      side: 'right',
+      position: 0.95,
+      anchor: 'free',
+    },
+    plot_bgcolor: '#F9FAFB',
+    paper_bgcolor: '#FFFFFF',
+    hovermode: 'x unified',
+    legend: {
+      orientation: 'h',
+      y: -0.3,
+      x: 0.5,
+      xanchor: 'center',
+    },
+    margin: { l: 80, r: 80, b: 100, t: 60 },
+  });
 
   return (
-    <div>
-      <p>This dashboard shows the environmental conditions of two different hives.</p>
-      
-      <div style={{ marginBottom: '40px' }}>
-        <Plot
-          data={data1}
-          layout={{
-            title: `${hive1.name} Data`,
-            xaxis: { title: 'Timestamp' },
-            yaxis: { title: 'Values', side: 'left', showgrid: true },
-            legend: { orientation: 'h', y: -0.3 },
-            margin: { l: 50, r: 50, b: 50, t: 50 },
-          }}
-          config={{ responsive: true }}
+    <div className="space-y-8">
+      {/* Header */}
+      <div className="flex items-center gap-3">
+        <span className="text-4xl">📊</span>
+        <div>
+          <h2 className="text-2xl font-bold text-gray-800">
+            Environmental Dashboard
+          </h2>
+          <p className="text-gray-600 text-sm">
+            Comprehensive view of all environmental conditions
+          </p>
+        </div>
+      </div>
+
+      {/* Info Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <DataCard 
+          icon="🌡️" 
+          title="Temperature" 
+          value="~35" 
+          unit="°C" 
+          color="red"
+        />
+        <DataCard 
+          icon="💧" 
+          title="Humidity" 
+          value="~60" 
+          unit="%" 
+          color="green"
+        />
+        <DataCard 
+          icon="⚖️" 
+          title="Weight" 
+          value="Variable" 
+          unit="kg" 
+          color="blue"
+        />
+        <DataCard 
+          icon="🐝" 
+          title="Bee Flow" 
+          value="Active" 
+          unit="" 
+          color="purple"
         />
       </div>
 
-      <div>
+      {/* Hive 1 Plot */}
+      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 animate-slideUp">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-4 h-4 rounded-full bg-blue-500"></div>
+          <h3 className="text-xl font-bold text-gray-800">{hive1.name} Hive</h3>
+        </div>
+        <Plot
+          data={data1}
+          layout={plotLayout(`${hive1.name} - Multi-Parameter Analysis`)}
+          config={{ 
+            responsive: true,
+            displaylogo: false,
+            modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d']
+          }}
+          style={{ width: '100%', height: '500px' }}
+        />
+      </div>
+
+      {/* Hive 2 Plot */}
+      <div className="bg-white rounded-xl shadow-lg p-6 border border-gray-200 animate-slideUp delay-100">
+        <div className="flex items-center gap-2 mb-4">
+          <div className="w-4 h-4 rounded-full bg-orange-500"></div>
+          <h3 className="text-xl font-bold text-gray-800">{hive2.name} Hive</h3>
+        </div>
         <Plot
           data={data2}
-          layout={{
-            title: `${hive2.name} Data`,
-            xaxis: { title: 'Timestamp' },
-            yaxis: { title: 'Values', side: 'left', showgrid: true },
-            legend: { orientation: 'h', y: -0.3 },
-            margin: { l: 50, r: 50, b: 50, t: 50 },
+          layout={plotLayout(`${hive2.name} - Multi-Parameter Analysis`)}
+          config={{ 
+            responsive: true,
+            displaylogo: false,
+            modeBarButtonsToRemove: ['pan2d', 'lasso2d', 'select2d']
           }}
-          config={{ responsive: true }}
+          style={{ width: '100%', height: '500px' }}
         />
+      </div>
+
+      {/* Insight Box */}
+      <div className="flex items-start gap-3 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-lg">
+        <span className="text-blue-600 text-2xl mt-1">💡</span>
+        <div className="text-sm text-blue-900">
+          <p className="font-bold text-lg mb-2">Dashboard Insights</p>
+          <ul className="space-y-1 list-disc list-inside">
+            <li>This dashboard shows the environmental conditions of two different hives</li>
+            <li>Multiple Y-axes allow simultaneous comparison of different parameters</li>
+            <li>Temperature and humidity are critical for colony health</li>
+            <li>Weight changes indicate honey production and resource consumption</li>
+            <li>Flow data reveals foraging activity patterns</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
