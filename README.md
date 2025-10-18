@@ -2,6 +2,11 @@
 
 Beehive Environmental Monitoring Dashboard.
 
+## 🎥 Demo
+Check out the live demo on YouTube:  
+[▶️ Watch Demo on YouTube](https://youtu.be/zjLYnyyKxxI?si=9qLDlqjVUZI_7kaA)
+
+
 ## Project Description  
 
 This application provides an interactive visualization of beehive data from two locations, Würzburg and Schwartau, collected from Jan 2017 to May 2019. 
