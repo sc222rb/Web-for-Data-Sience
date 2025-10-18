@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { LoadingSpinner, ErrorMessage, DataCard } from './CommonComponents';
 
 /**
- * BeehiveEnvironmentalDashboard Component
+ * BeehiveEnvironmentalDashboard Component - Professional Design
  */
 const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchTrigger }) => {
   const [data1, setData1] = useState([]);
