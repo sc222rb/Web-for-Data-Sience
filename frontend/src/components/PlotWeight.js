@@ -5,7 +5,17 @@ import PropTypes from 'prop-types';
 import { LoadingSpinner, ErrorMessage, EmptyState } from './CommonComponents';
 
 /**
- * PlotWeight Component - Professional Design
+ * PlotWeight Component
+ * This component fetches and displays weight data over time for two beehives.
+ * It retrieves data from an API and visualizes it using Plotly, showing the weight trends
+ * for both hives.
+ *
+ * @param {Object} hive1 - The first hive object, containing at least an `id` and `name`
+ * @param {Object} hive2 - The second hive object, containing at least an `id` and `name`
+ * @param {string} fromDate - The starting date for the data query (YYYY-MM-DD format)
+ * @param {string} toDate - The ending date for the data query (YYYY-MM-DD format)
+ * @param {boolean} searchTrigger - A boolean value to trigger the search when changed
+ * @returns {JSX.Element} The rendered plot of weight data over time
  */
 const PlotWeight = ({ hive1, hive2, fromDate, toDate, searchTrigger }) => {
   const [data, setData] = useState([]);

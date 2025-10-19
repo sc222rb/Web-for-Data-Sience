@@ -5,7 +5,16 @@ import PropTypes from 'prop-types';
 import { LoadingSpinner, ErrorMessage, EmptyState } from './CommonComponents';
 
 /**
- * PlotFlow Component - Professional Design
+ * PlotFlow Component
+ * This component fetches and plots bee flow data (arrivals and departures) from two beehives
+ * over a given date range, and displays it as a line chart.
+ *
+ * @param {Object} hive1 - The first hive object containing hive information (id, name, etc.)
+ * @param {Object} hive2 - The second hive object containing hive information (id, name, etc.)
+ * @param {string} fromDate - The starting date for data filtering (format: YYYY-MM-DD)
+ * @param {string} toDate - The ending date for data filtering (format: YYYY-MM-DD)
+ * @param {boolean} searchTrigger - A boolean trigger to refetch data when search is initiated
+ * @returns {JSX.Element} The rendered plot component
  */
 const PlotFlow = ({ hive1, hive2, fromDate, toDate, searchTrigger }) => {
   const [data, setData] = useState([]);

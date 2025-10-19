@@ -5,7 +5,17 @@ import PropTypes from 'prop-types';
 import { LoadingSpinner, ErrorMessage, EmptyState } from './CommonComponents';
 
 /**
- * PlotTemperature Component - Professional Design
+ * PlotTemperature Component
+ * This component fetches and displays temperature data over time for two beehives.
+ * It retrieves data from an API and visualizes it using Plotly, showing the temperature trends
+ * for both hives.
+ *
+ * @param {Object} hive1 - The first hive object, containing at least an `id` and `name`
+ * @param {Object} hive2 - The second hive object, containing at least an `id` and `name`
+ * @param {string} fromDate - The starting date for the data query (YYYY-MM-DD format)
+ * @param {string} toDate - The ending date for the data query (YYYY-MM-DD format)
+ * @param {boolean} searchTrigger - A boolean value to trigger the search when changed
+ * @returns {JSX.Element} The rendered plot of temperature data over time
  */
 const PlotTemperature = ({ hive1, hive2, fromDate, toDate, searchTrigger }) => {
   const [data, setData] = useState([]);

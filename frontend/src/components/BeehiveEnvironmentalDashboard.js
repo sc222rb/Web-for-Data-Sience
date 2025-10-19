@@ -5,7 +5,17 @@ import PropTypes from 'prop-types';
 import { LoadingSpinner, ErrorMessage, DataCard } from './CommonComponents';
 
 /**
- * BeehiveEnvironmentalDashboard Component - Professional Design
+ * BeehiveEnvironmentalDashboard Component
+ * This component fetches and displays environmental data (temperature, humidity, flow, and weight)
+ * for two beehives over a given date range. It renders two separate graphs, one for each hive,
+ * showing the data trends over time.
+ *
+ * @param {Object} hive1 - The first hive object, containing hive information (id, name, etc.)
+ * @param {Object} hive2 - The second hive object, containing hive information (id, name, etc.)
+ * @param {string} fromDate - The starting date for data filtering (format: YYYY-MM-DD)
+ * @param {string} toDate - The ending date for data filtering (format: YYYY-MM-DD)
+ * @param {boolean} searchTrigger - A boolean trigger that fetches data when the search is initiated
+ * @returns {JSX.Element} The rendered environmental dashboard component
  */
 const BeehiveEnvironmentalDashboard = ({ hive1, hive2, fromDate, toDate, searchTrigger }) => {
   const [data1, setData1] = useState([]);

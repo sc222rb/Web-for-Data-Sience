@@ -5,7 +5,17 @@ import PropTypes from 'prop-types';
 import { LoadingSpinner, ErrorMessage, EmptyState } from './CommonComponents';
 
 /**
- * PlotHumidity Component - Professional Design
+ * PlotHumidity Component
+ * This component fetches and displays humidity data over time for two beehives.
+ * The data is retrieved from an API, and the component uses Plotly to visualize it
+ * in the form of a line graph, showing the humidity trends for both hives.
+ *
+ * @param {Object} hive1 - The first hive object, containing at least an `id` and `name`
+ * @param {Object} hive2 - The second hive object, containing at least an `id` and `name`
+ * @param {string} fromDate - The starting date for the data query (YYYY-MM-DD format)
+ * @param {string} toDate - The ending date for the data query (YYYY-MM-DD format)
+ * @param {boolean} searchTrigger - A boolean value to trigger the search when changed
+ * @returns {JSX.Element} The rendered plot of humidity data over time
  */
 const PlotHumidity = ({ hive1, hive2, fromDate, toDate, searchTrigger }) => {
   const [data, setData] = useState([]);

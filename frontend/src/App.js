@@ -47,6 +47,8 @@ const Navigation = () => {
 
 /**
  * App Component
+ * Main application component for rendering the beehive environmental dashboard.
+ * @returns {JSX.Element} The main app component.
  */
 const App = () => {
   const [hives, setHives] = useState([]);

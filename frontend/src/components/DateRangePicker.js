@@ -2,21 +2,31 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
 /**
- * DateRangePicker Component - Professional Design
+ * DateRangePicker Component
+ * This component provides a date range picker interface where users can select a 
+ * 'from' and 'to' date within a specified range, ensuring that the dates are valid.
+ * Upon selection, the search button triggers the `onSearch` callback with the selected dates.
+ *
+ * @param {string} initialFromDate - The initial 'from' date value (in YYYY-MM-DD format)
+ * @param {string} initialToDate - The initial 'to' date value (in YYYY-MM-DD format)
+ * @param {Function} onSearch - Callback function that gets called when the search button is clicked
+ * @returns {JSX.Element} The rendered date range picker component
  */
 const DateRangePicker = ({ fromDate: initialFromDate, toDate: initialToDate, onSearch }) => {
   const [fromDate, setFromDate] = useState(initialFromDate);
   const [toDate, setToDate] = useState(initialToDate);
   const [error, setError] = useState('');
 
+  // Define the valid date range
   const minDate = '2017-01-01';
   const maxDate = '2019-05-31';
 
+  // Handle date range changes and ensure validity
   const handleFromDateChange = (e) => {
     const newFromDate = e.target.value;
     if (newFromDate <= toDate) {
       setFromDate(newFromDate);
-      setError('');
+      setError(''); // Clear any previous errors
     } else {
       setError('From Date cannot be later than To Date.');
     }
@@ -26,7 +36,7 @@ const DateRangePicker = ({ fromDate: initialFromDate, toDate: initialToDate, onS
     const newToDate = e.target.value;
     if (newToDate >= fromDate) {
       setToDate(newToDate);
-      setError('');
+      setError(''); // Clear any previous errors
     } else {
       setError('To Date cannot be earlier than From Date.');
     }
